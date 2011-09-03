@@ -1,0 +1,499 @@
+<!doctype html> 
+<html> 
+<head> 
+<meta charset="utf-8">
+<title>Simple uploader - by Calvein</title>
+<link href="normalize.css" rel="stylesheet">
+<link href="http://fonts.googleapis.com/css?family=Pacifico&text='Simple uploader'" rel="stylesheet">
+<style>
+	/* Useless stuff */
+	body {
+		margin: 0 auto;
+		text-align: center;
+		background: url('fabric_1.png');
+	}
+	
+	h1 {
+		margin: 0;
+		font: 48px 'Pacifico', Comic sans, cursive;
+		font-weight: normal;
+		color: #333;
+		text-shadow: 0 -1px 1px rgba(100, 100, 100, .7);
+	}
+	
+	h2 {
+		font: 14px Georgia;
+		color: #222;
+	}
+	
+	form {
+		width: 150px;
+		margin: 30px auto;
+		text-align: left;
+	}
+	
+	hr {
+		margin: 20px 150px 10px;
+		border-style: solid;
+		border-top-color: #666;
+		border-bottom-color: #bbb;
+	}
+	
+	i {
+		font-size: 12px;
+		color: #222;
+	}
+
+	/* Usefull stuff */
+	#uploader {
+		display: inline-block;
+		position: relative;
+		width: 150px;
+		height: 32px;
+		background-image: -webkit-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 87%) 100%);
+		background-image: -moz-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 87%) 100%);
+		background-image: -ms-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 87%) 100%);
+		background-image: -o-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 87%) 100%);
+		background-image: linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 87%) 100%);
+		box-shadow: inset 0 1px rgba(255, 255, 255, .4),
+					0 1px 3px rgba(0, 0, 0, .25);
+		border: 1px solid #d7d7d7;
+		border-radius: 4px;
+		-webkit-transition: .05s, width .5s;
+		-moz-transition: .05s, width .5s;
+		-ms-transition: .05s, width .5s;
+		-o-transition: .05s, width .5s;
+		transition: .05s, width .5s;
+	}
+	 
+	#uploader:hover, #uploader.hover {
+		background-image: -webkit-linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
+		background-image: -moz-linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
+		background-image: -ms-linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
+		background-image: -o-linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
+		background-image: linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4),
+					0 1px 4px rgba(0, 0, 0, .25);
+	}
+	 
+	#uploader:active {
+		background-image: -webkit-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 88%) 100%);
+		background-image: -moz-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 88%) 100%);
+		background-image: -ms-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 88%) 100%);
+		background-image: -o-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 88%) 100%);
+		background-image: linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 88%) 100%);
+		box-shadow: inset 0 2px 3px rgba(100, 100, 100, .25),
+					0 1px 3px rgba(0, 0, 0, .25);
+	}
+	 
+	#uploader > * {
+		display: inline-block;
+		margin: 0;
+		vertical-align: top;
+		-webkit-transition: .2s;
+		-moz-transition: .2s;
+		-ms-transition: .2s;
+		-o-transition: .2s;
+		transition: .2s;
+	}
+	 
+	#uploader figure {
+		width: 24px;
+		height: 24px;
+		margin: 3px 3px 0;
+		border: 1px solid #afafaf;
+		text-align: center;
+		background-image: -webkit-linear-gradient(top, #ddd 0%, #bbb 45%, #b0b0b0 50%, #c5c5c5 100%);
+		background-image: -moz-linear-gradient(top, #ddd 0%, #bbb 45%, #b0b0b0 50%, #c5c5c5 100%);
+		background-image: -ms-linear-gradient(top, #ddd 0%, #bbb 45%, #b0b0b0 50%, #c5c5c5 100%);
+		background-image: -o-linear-gradient(top, #ddd 0%, #bbb 45%, #b0b0b0 50%, #c5c5c5 100%);
+		background-image: linear-gradient(top, #ddd 0%, #bbb 45%, #b0b0b0 50%, #c5c5c5 100%);
+		box-shadow: inset 0 1px 2px rgba(0, 0, 0, .25);
+	}
+	 
+	#uploader figure > div {
+		width: 24px;
+		height: 0;
+		overflow: hidden;
+	}
+	 
+	#uploader img {
+		max-width: 24px;
+		max-height: 24px;
+	}
+	 
+	#uploader label {
+		position: relative;
+		width: 117px;
+		border-left: 1px solid #d7d7d7;
+		font: 13px/32px sans-serif;
+		text-align: center;
+		font-weight: bold;
+		color: #666;
+		text-shadow: 0 1px 2px rgba(255, 255, 255, .6);
+		cursor: pointer;
+		z-index: 1;
+	}
+	
+	#file {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		left: -9001em; /* over 9000 */
+		opacity: 0;
+		cursor: pointer;
+	}
+	 
+	#uploader progress, #uploader ul {
+		display: inline-block;
+		position: absolute;
+		width: 110px;
+		height: 8px;
+		left: 0;
+		top: 13px;
+		opacity: 0;
+		-webkit-transition: opacity .5s;
+		-moz-transition: opacity .5s;
+		-ms-transition: opacity .5s;
+		-o-transition: opacity .5s;
+		transition: opacity .5s;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+	}
+	
+	/* Won't work with the webkit declaration, webkit doesn't care */
+	#uploader progress {
+		background-image: -moz-linear-gradient(top, #C7C7C7 0%, #D7D7D7 100%);
+		border-radius: 3px;
+		border: none;		
+		box-shadow: inset 0 1px #bbb,
+			0 -1px 1px rgba(0, 0, 0, .2);
+	}
+
+	#uploader progress::-webkit-progress-bar {
+		background-image: -webkit-linear-gradient(top, #C7C7C7 0%, #D7D7D7 100%);
+		box-shadow: inset 0 1px #bbb,
+					0 -1px 1px rgba(0, 0, 0, .2);
+	}
+
+	#uploader progress::-webkit-progress-value, #uploader progress::-webkit-progress-bar {
+		border-radius: 3px;
+	}
+
+	#uploader progress::-webkit-progress-value {
+		border: 1px solid #63a633;
+		background-image: -webkit-linear-gradient(top, #7BC446 0%, #59AA1E 50%, #60B125 100%);
+		-webkit-transition: .5s;
+	}
+	
+	#uploader progress::-moz-progress-bar {
+		border: 1px solid #63a633;
+		border-radius: 3px;
+		background-image: -moz-linear-gradient(top, #7BC446 0%, #59AA1E 50%, #60B125 100%);
+		-moz-transition: .5s;
+	}
+	
+	#uploader ul {
+		top: 0;
+		padding: 0;
+		list-style: none;
+	}
+	
+	#uploader ul > li {
+		position: absolute;
+		padding-left: 21px;
+		text-transform: uppercase;
+		font: 12px/32px Arial, sans-serif
+	}
+	
+	#uploader ul *::before, #uploader ul *::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 0;
+	}
+
+	#uploader ul.ok li:first-child {
+		opacity: 0;
+		color: #6fac42;
+		font-weight: bold;
+		-webkit-animation: fadeout 3s 1 ease-in;
+		-moz-animation: fadeout 3s 1 ease-in;
+	}
+	
+	#uploader ul li:first-child::before {
+		left: 3px;
+		width: 14px;
+		height: 14px;
+		margin-top: -7px;
+		border-radius: 14px;
+		background: #7AC245;
+		box-shadow: inset 0 0 3px rgba(111, 172, 66, .6),
+					0 -1px 3px rgba(111, 172, 66, .2);
+	}
+	
+	#uploader ul li:first-child::after {
+		left: 8px;
+		width: 2px;
+		height: 7px;
+		border-width: 0 2px 2px 0;
+		border-style: solid;
+		border-color: white;
+		margin-top: -5px;
+		-webkit-transform: rotate(45deg);
+		-moz-transform: rotate(45deg);
+		-ms-transform: rotate(45deg);
+		-o-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+	
+	#uploader ul.ok li:last-child {
+		-webkit-animation: fadein 3s 1 ease-in;
+		-moz-animation: fadein 3s 1 ease-in;
+	}
+	
+	#uploader ul li:last-child::before {
+		z-index: 10;
+		left: 9px;
+		width: 2px;
+		height: 8px;
+		margin-top: -4px;
+		background: white;
+		-webkit-transform: rotate(45deg);
+		-moz-transform: rotate(45deg);
+		-ms-transform: rotate(45deg);
+		-o-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+	
+	#uploader ul li:last-child a {
+		text-decoration: none;
+		color: #b3b3b3;
+		font-weight: bold;
+	}
+
+	#uploader ul li:last-child a::before {
+		width: 14px;
+		height: 14px;
+		border-radius: 14px;
+	}
+
+	#uploader ul li:last-child a::before, #uploader ul li:last-child a::after {
+		margin: -7px 0 0 3px;
+		background: #C53333;
+		box-shadow: inset 0 0 3px rgba(0, 0, 0, .6),
+					0 -1px 3px rgba(0, 0, 0, .2);
+	}
+	
+	#uploader ul li:last-child a::after {
+		left: 3px;
+		width: 8px;
+		height: 2px;
+		margin-top: -1px;
+		background: white;
+		box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+		-webkit-transform: rotate(45deg);
+		-moz-transform: rotate(45deg);
+		-ms-transform: rotate(45deg);
+		-o-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
+    
+    @-webkit-keyframes fadeout {
+        0% { opacity: 1; }
+        25% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    
+    @-moz-keyframes fadeout {
+        0% { opacity: 1; }
+        25% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    
+    @-webkit-keyframes fadein {
+        0% { opacity: 0; }
+        50% { opacity: 0; }
+        75% { opacity: 1; }
+    }
+    
+    @-moz-keyframes fadein {
+        0% { opacity: 0; }
+        50% { opacity: 0; }
+        75% { opacity: 1; }
+    }
+</style>
+</head>
+<body>
+	<header>
+		<h1>Simple uploader</h1>
+		<h2>By <a href="http://twitter.com/Calvein">Calvein</a> based on the original idea by <a href="http://twitter.com/jessedodds">Jesse Dodds</a>
+	</header>
+	<form>
+		<div id="uploader">
+			<figure><div></div></figure><!--
+			--><label>
+				Choose a file...
+			</label>
+			<input type=file id=file><!--
+		--><progress max=100 value=30></progress>
+			<ul>
+				<li>Complete</li>
+				<li><a href=#>Remove</a></li>
+			</ul>
+		</div>
+	</form>
+	<hr>
+	<i>Get the <a href="http://dribbble.com/shots/251571-Image-upload-idea">shot</a> | Get the  <a href="GIT">code</a></i>
+<script>
+function $(q){return $uploader.querySelector(q)}
+// https://gist.github.com/1002315
+function cssProp(s){return eval(0+"O-Moz-Webkit-Ms-".replace(/.*?-|$/g,"||(s='$&"+s+"')in new Image().style&&s").replace(/-(.)/g,"'+'$1'.toUpperCase()+'"))}
+
+// Declare Elements
+$uploader = document.querySelector('#uploader'),
+	$figure = $('figure'),
+	$mask = $('figure > div'),
+	$label = $('label'),
+	$file = $('#file'),
+	$progress = $('progress'),
+	$ok = $('ul');
+
+function uploadFile(e) {
+	// If it's dropped
+    e.stopPropagation();
+    e.preventDefault();
+	var files = this.files || e.dataTransfer.files,
+		file = files[0],
+		isImage = /^image\//.test(file.type),
+		dataURI = '',
+		xhr = new XMLHttpRequest(),
+		upload = xhr.upload;
+
+	// Reader
+	if (isImage) {
+		var reader = new FileReader();
+		
+		// http://code.google.com/p/chromium/issues/detail?id=48367
+		//reader.addEventListener('onload', function(e) {
+		reader.onload = function(e) {
+			dataURI = this.result;
+			var img = document.createElement('img');
+			img.src = this.result;
+			img.alt = file.name;
+			img.style.display = 'inline';
+			$mask.insertBefore(img, null);
+		};
+	
+		reader.readAsDataURL(file);
+	} else {
+		$figure.style.display = 'none';
+		$label.style.borderLeftWidth = 0;
+		$ok.style.left = 0;
+		$uploader.style.width = '118px';
+	}
+	
+	// XHR
+	// upload.php is a tiny test in php
+	xhr.open('POST', 'upload.php');
+	
+	upload.addEventListener('loadstart', function(e) {
+		$label.style.display = 'none';
+		$progress.style.opacity = 1;
+		if (isImage) {
+			$uploader.style.width = '32px';
+			$progress.style.left = '40px';
+			$ok.style.left = '40px';
+		} else {
+			$uploader.style.width = 0;
+			$uploader.style.borderWidth = 0;
+		}
+	}, false);
+
+	upload.addEventListener('progress', function(e) {
+		if (e.lengthComputable) {
+			var percentLoaded = Math.round((e.loaded / e.total) * 100);
+			if (percentLoaded < 100) {
+				$progress.value = percentLoaded;
+				$mask.style.height = 20 * percentLoaded / 100 + 'px';
+			}
+		}
+	}, false);
+	
+	upload.addEventListener('load', function(e) {
+		if ('webkitNotifications' in window && webkitNotifications.checkPermission() === 0) {
+			//webkitNotifications.createNotification(dataURI, 'Upload complete', 'The ' + file.type.split('/')[0] + ' "' + file.fileName + '" was successfully uploaded').show();
+		}
+		
+		$mask.style.height = '24px';
+		$progress.value = 100;
+		$progress.style.opacity = 0;
+		$ok.style.opacity = 1;
+		$ok.className = 'ok';
+	}, false);
+	
+    xhr.setRequestHeader("Cache-Control", "no-cache");
+    xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    xhr.setRequestHeader("X-File-Name", file.name);
+    xhr.send(file);
+}
+
+$label.addEventListener('click', function(e) {
+	if ('webkitNotifications' in window && webkitNotifications.checkPermission() !== 0)
+		webkitNotifications.requestPermission();
+	
+	// Firefox doesn't take the "for" attribute
+	$file.click();
+}, false);
+$file.addEventListener('change', uploadFile, false);
+$uploader.addEventListener('drop', uploadFile, false);
+
+function hover(e) {
+	e.type === 'dragenter' ? this.addClassName('hover') : this.removeClassName('hover');
+}
+$uploader.addEventListener('dragenter', hover, false);
+$uploader.addEventListener('dragleave', hover, false);
+
+$uploader.addEventListener('dragover', function(e) {
+	e.stopPropagation();
+	e.preventDefault();
+}, false);
+
+// Remove link
+$('a').addEventListener('click', function(e) {
+	e.preventDefault();
+
+	$uploader.style.opacity = 0;
+	$uploader.style[cssProp('animation')] = 'fadeout 1.5s 1 ease-in';
+}, false);
+
+$uploader.addEventListener('animationend', animationEnd, false);
+$uploader.addEventListener('webkitAnimationEnd', animationEnd, false);
+
+function animationEnd(e) {
+	if (e.target.id && e.animationName === 'fadeout') {
+		// reset the styles
+		var $img = $('img')
+		if ($img)
+			$img.parentNode.removeChild($img);
+		$label.style.display = 'inline-block';
+		$progress.style.opacity = 0;
+		$ok.style.left = '40px';
+		$ok.style.opacity = 0;
+		$figure.style.display = 'inline-block';
+		$label.style.borderLeftWidth = '1px';
+		$uploader.style.borderWidth = '1px';
+		$uploader.style.width = '150px';
+		$uploader.style.opacity = 1;
+		
+		// reset the input
+		$file.value = '';
+		// You may want to delete it on the server too, feel free to add an AJAX request here
+
+		$uploader.style[cssProp('animationName')] = 'fadein';
+	}
+}
+
+</script>
+</body>
+</html>
