@@ -60,12 +60,17 @@
 		vertical-align: text-bottom;
 	}
 	
-	footer img:first-child + a {
+	footer a:nth-of-type(1) {
 		color: #c5376d;
 	}
 	
-	footer a:last-child {
+	footer a:nth-of-type(2) {
 		color: #000;
+	}
+	
+	footer iframe {
+		width: 120px !important;
+		vertical-align: bottom;
 	}
 
 	/* Usefull stuff */
@@ -382,8 +387,10 @@
 	<hr>
 	<footer>
 		Get the <img src="http://dribbble.com/favicon.ico" alt="Dribbble"> <a href="http://dribbble.com/shots/251571-Image-upload-idea">shot</a> |
-		Get the <img src="https://github.com/favicon.ico" alt="GitHub"> <a href="https://github.com/Calvein/Simple-uploader">code</a>
+		Get the <img src="https://github.com/favicon.ico" alt="GitHub"> <a href="https://github.com/Calvein/Simple-uploader">code</a> |
+		<a href="http://twitter.com/Calvein" class="twitter-follow-button" data-show-count="false">Follow @calvein</a>
 	</footer>
+<script src="http://platform.twitter.com/widgets.js"></script>
 <script>
 function $(q){return $uploader.querySelector(q)}
 // https://gist.github.com/1002315
@@ -534,6 +541,17 @@ function animationEnd(e) {
 	}
 }
 
+</script>
+<script>
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-25537500-1']);
+	_gaq.push(['_trackPageview']);
+	
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
 </script>
 </body>
 </html>
