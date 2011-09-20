@@ -12,6 +12,10 @@
 		text-align: center;
 		background: url('fabric_1.png');
 	}
+
+	a { color: #00e; }
+	a:visited { color: #551a8b; }
+	a:hover { color: #06e; }
 	
 	h1 {
 		margin: 0;
@@ -22,7 +26,7 @@
 	}
 	
 	h2 {
-		font: 14px Georgia;
+		font: 16px Georgia;
 		color: #222;
 	}
 	
@@ -32,16 +36,36 @@
 		text-align: left;
 	}
 	
-	hr {
-		margin: 20px 150px 10px;
-		border-style: solid;
-		border-top-color: #666;
-		border-bottom-color: #bbb;
+	p {
+		font: 14px Georgia;
+		color: #222;
 	}
 	
-	i {
+	hr {
+		margin: 20px 150px 10px;
+		border-width: 1px 0;
+		border-style: solid;
+		border-top-color: #888;
+		border-bottom-color: #ccc;
+	}
+	
+	footer {
+		font-style: italic;
 		font-size: 12px;
+		line-height: 16px;
 		color: #222;
+	}
+	
+	footer img, footer a {
+		vertical-align: text-bottom;
+	}
+	
+	footer img:first-child + a {
+		color: #c5376d;
+	}
+	
+	footer a:last-child {
+		color: #000;
 	}
 
 	/* Usefull stuff */
@@ -66,7 +90,7 @@
 		transition: .05s, width .5s;
 	}
 	 
-	#uploader:hover, #uploader.hover {
+	#uploader:hover, #uploader.over {
 		background-image: -webkit-linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
 		background-image: -moz-linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
 		background-image: -ms-linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
@@ -74,6 +98,10 @@
 		background-image: linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
 		box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4),
 					0 1px 4px rgba(0, 0, 0, .25);
+	}
+	
+	#uploader.over {
+		outline: 3px dashed #999;
 	}
 	 
 	#uploader:active {
@@ -132,6 +160,7 @@
 		color: #666;
 		text-shadow: 0 1px 2px rgba(255, 255, 255, .6);
 		cursor: pointer;
+		pointer-events: none;
 		z-index: 1;
 	}
 	
@@ -139,9 +168,11 @@
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		left: -9001em; /* over 9000 */
+		left: 0;
+		top: 0;
 		opacity: 0;
 		cursor: pointer;
+		z-index: 1;
 	}
 	 
 	#uploader progress, #uploader ul {
@@ -343,15 +374,23 @@
 			</ul>
 		</div>
 	</form>
+	<p>
+		It's done in plain JavaScript and CSS3, there is no images.<br>The pattern comes from <a href="http://subtlepatterns.com/">Subtle Patterns</a>,
+		the icons are edited version of <a href="http://twitter.com/necolas">Nicolas Gallagher</a>'s <a href="http://nicolasgallagher.com/pure-css-gui-icons/">ones</a>.<br>
+		It works only (well I only tested those) on Chrome and Firefox.
+	</p>
 	<hr>
-	<i>Get the <a href="http://dribbble.com/shots/251571-Image-upload-idea">shot</a> | Get the  <a href="GIT">code</a></i>
+	<footer>
+		Get the <img src="http://dribbble.com/favicon.ico" alt="Dribbble"> <a href="http://dribbble.com/shots/251571-Image-upload-idea">shot</a> |
+		Get the <img src="https://github.com/favicon.ico" alt="GitHub"> <a href="https://github.com/Calvein/Simple-uploader">code</a>
+	</footer>
 <script>
 function $(q){return $uploader.querySelector(q)}
 // https://gist.github.com/1002315
 function cssProp(s){return eval(0+"O-Moz-Webkit-Ms-".replace(/.*?-|$/g,"||(s='$&"+s+"')in new Image().style&&s").replace(/-(.)/g,"'+'$1'.toUpperCase()+'"))}
 
 // Declare Elements
-$uploader = document.querySelector('#uploader'),
+var $uploader = document.querySelector('#uploader'),
 	$figure = $('figure'),
 	$mask = $('figure > div'),
 	$label = $('label'),
@@ -361,6 +400,7 @@ $uploader = document.querySelector('#uploader'),
 
 function uploadFile(e) {
 	// If it's dropped
+	this.classList.remove('over');
     e.stopPropagation();
     e.preventDefault();
 	var files = this.files || e.dataTransfer.files,
@@ -422,7 +462,7 @@ function uploadFile(e) {
 	
 	upload.addEventListener('load', function(e) {
 		if ('webkitNotifications' in window && webkitNotifications.checkPermission() === 0) {
-			//webkitNotifications.createNotification(dataURI, 'Upload complete', 'The ' + file.type.split('/')[0] + ' "' + file.fileName + '" was successfully uploaded').show();
+			webkitNotifications.createNotification(dataURI, 'Upload complete', 'The ' + file.type.split('/')[0] + ' "' + file.fileName + '" was successfully uploaded').show();
 		}
 		
 		$mask.style.height = '24px';
@@ -441,15 +481,12 @@ function uploadFile(e) {
 $label.addEventListener('click', function(e) {
 	if ('webkitNotifications' in window && webkitNotifications.checkPermission() !== 0)
 		webkitNotifications.requestPermission();
-	
-	// Firefox doesn't take the "for" attribute
-	$file.click();
 }, false);
 $file.addEventListener('change', uploadFile, false);
 $uploader.addEventListener('drop', uploadFile, false);
 
 function hover(e) {
-	e.type === 'dragenter' ? this.addClassName('hover') : this.removeClassName('hover');
+	this.classList.toggle('over');
 }
 $uploader.addEventListener('dragenter', hover, false);
 $uploader.addEventListener('dragleave', hover, false);
@@ -483,6 +520,7 @@ function animationEnd(e) {
 		$figure.style.display = 'inline-block';
 		$label.style.borderLeftWidth = '1px';
 		$uploader.style.borderWidth = '1px';
+		$uploader.style[cssProp('transition')] = 'width 0s';
 		$uploader.style.width = '150px';
 		$uploader.style.opacity = 1;
 		
@@ -491,6 +529,8 @@ function animationEnd(e) {
 		// You may want to delete it on the server too, feel free to add an AJAX request here
 
 		$uploader.style[cssProp('animationName')] = 'fadein';
+	} else {
+		$uploader.style[cssProp('transition')] = 'width .5s';
 	}
 }
 
