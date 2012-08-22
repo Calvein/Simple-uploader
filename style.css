@@ -1,0 +1,353 @@
+/* Useless stuff */
+body {
+    margin: 0 auto;
+    text-align: center;
+    background: url('fabric_1.png');
+}
+
+a { color: #00e; }
+a:visited { color: #551a8b; }
+a:hover { color: #06e; }
+
+h1 {
+    margin: 0;
+    font: 48px 'Pacifico', Comic sans, cursive;
+    font-weight: normal;
+    color: #333;
+    text-shadow: 0 -1px 1px rgba(100, 100, 100, .7);
+}
+
+h2 {
+    font: 16px Georgia;
+    color: #222;
+}
+
+form {
+    width: 150px;
+    margin: 30px auto;
+    text-align: left;
+}
+
+p {
+    font: 14px Georgia;
+    color: #222;
+}
+
+hr {
+    margin: 20px 150px 10px;
+    border-width: 1px 0;
+    border-style: solid;
+    border-top-color: #888;
+    border-bottom-color: #ccc;
+}
+
+footer {
+    font-style: italic;
+    font-size: 12px;
+    line-height: 16px;
+    color: #222;
+}
+
+footer img,
+footer a {
+    vertical-align: text-bottom;
+}
+
+footer a:nth-of-type(1) {
+    color: #c5376d;
+}
+
+footer a:nth-of-type(2) {
+    color: #000;
+}
+
+footer iframe {
+    width: 120px !important;
+    vertical-align: bottom;
+}
+
+/* Usefull stuff */
+#uploader {
+    display: inline-block;
+    position: relative;
+    width: 150px;
+    height: 32px;
+    background-image: -webkit-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 87%) 100%);
+    background-image:    -moz-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 87%) 100%);
+    background-image:         linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 87%) 100%);
+    box-shadow: inset 0 1px rgba(255, 255, 255, .4),
+                0 1px 3px rgba(0, 0, 0, .25);
+    border: 1px solid #d7d7d7;
+    border-radius: 4px;
+    -webkit-transition: .05s, width .5s;
+       -moz-transition: .05s, width .5s;
+            transition: .05s, width .5s;
+}
+
+#uploader:hover,
+#uploader.over {
+    background-image: -webkit-linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
+    background-image:    -moz-linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
+    background-image:         linear-gradient(top, hsl(0, 0%, 97%) 0%, hsl(0, 0%, 89%) 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4),
+                0 1px 4px rgba(0, 0, 0, .25);
+}
+
+#uploader.over {
+    outline: 3px dashed #999;
+}
+
+#uploader:active {
+    background-image: -webkit-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 88%) 100%);
+    background-image:    -moz-linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 88%) 100%);
+    background-image:         linear-gradient(top, hsl(0, 0%, 95%) 0%, hsl(0, 0%, 88%) 100%);
+    box-shadow: inset 0 2px 3px rgba(100, 100, 100, .25),
+                0 1px 3px rgba(0, 0, 0, .25);
+}
+
+#uploader > * {
+    display: inline-block;
+    margin: 0;
+    vertical-align: top;
+    -webkit-transition: .2s;
+       -moz-transition: .2s;
+            transition: .2s;
+}
+
+#uploader figure {
+    width: 24px;
+    height: 24px;
+    margin: 3px 3px 0;
+    border: 1px solid #afafaf;
+    text-align: center;
+    background-image: -webkit-linear-gradient(top, #ddd 0%, #bbb 45%, #b0b0b0 50%, #c5c5c5 100%);
+    background-image:    -moz-linear-gradient(top, #ddd 0%, #bbb 45%, #b0b0b0 50%, #c5c5c5 100%);
+    background-image:         linear-gradient(top, #ddd 0%, #bbb 45%, #b0b0b0 50%, #c5c5c5 100%);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .25);
+}
+
+#uploader figure > div {
+    width: 24px;
+    height: 0;
+    overflow: hidden;
+}
+
+#uploader img {
+    max-width: 24px;
+    max-height: 24px;
+    vertical-align: middle;
+}
+
+#uploader label {
+    position: relative;
+    width: 117px;
+    border-left: 1px solid #d7d7d7;
+    font: 13px/32px sans-serif;
+    text-align: center;
+    font-weight: bold;
+    color: #666;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, .6);
+    cursor: pointer;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#file {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+
+#uploader progress,
+#uploader ul {
+    display: inline-block;
+    position: absolute;
+    width: 110px;
+    height: 8px;
+    left: 0;
+    top: 13px;
+    opacity: 0;
+    -webkit-transition: opacity .5s;
+       -moz-transition: opacity .5s;
+            transition: opacity .5s;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+}
+
+/* Won't work with the webkit declaration, webkit doesn't care */
+#uploader progress {
+    background-image: -moz-linear-gradient(top, #C7C7C7 0%, #D7D7D7 100%);
+    border-radius: 3px;
+    border: none;
+    box-shadow: inset 0 1px #bbb,
+                0 -1px 1px rgba(0, 0, 0, .2);
+}
+
+#uploader progress::-webkit-progress-bar {
+    background-image: -webkit-linear-gradient(top, #C7C7C7 0%, #D7D7D7 100%);
+    box-shadow: inset 0 1px #bbb,
+                0 -1px 1px rgba(0, 0, 0, .2);
+}
+
+#uploader progress::-webkit-progress-value, #uploader progress::-webkit-progress-bar {
+    border-radius: 3px;
+}
+
+#uploader progress::-webkit-progress-value {
+    border: 1px solid #63a633;
+    background-image: -webkit-linear-gradient(top, #7BC446 0%, #59AA1E 50%, #60B125 100%);
+    -webkit-transition: .5s;
+    transition: .5s;
+}
+
+#uploader progress::-moz-progress-bar {
+    border: 1px solid #63a633;
+    border-radius: 3px;
+    background-image: -moz-linear-gradient(top, #7BC446 0%, #59AA1E 50%, #60B125 100%);
+    -moz-transition: .5s;
+    transition: .5s;
+}
+
+#uploader ul {
+    top: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#uploader ul > li {
+    position: absolute;
+    padding-left: 21px;
+    text-transform: uppercase;
+    font: 12px/32px Arial, sans-serif
+}
+
+#uploader ul *::before, #uploader ul *::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+}
+
+#uploader ul.ok li:first-child {
+    opacity: 0;
+    color: #6fac42;
+    font-weight: bold;
+    -webkit-animation: fadeout 3s 1 ease-in;
+       -moz-animation: fadeout 3s 1 ease-in;
+            animation: fadeout 3s 1 ease-in;
+}
+
+#uploader ul li:first-child::before {
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    border-radius: 14px;
+    background: #7AC245;
+    box-shadow: inset 0 0 3px rgba(111, 172, 66, .6),
+                0 -1px 3px rgba(111, 172, 66, .2);
+}
+
+#uploader ul li:first-child::after {
+    left: 8px;
+    width: 2px;
+    height: 7px;
+    border-width: 0 2px 2px 0;
+    border-style: solid;
+    border-color: white;
+    margin-top: -5px;
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+            transform: rotate(45deg);
+}
+
+#uploader ul.ok li:last-child {
+    -webkit-animation: fadein 3s 1 ease-in;
+       -moz-animation: fadein 3s 1 ease-in;
+            animation: fadein 3s 1 ease-in;
+}
+
+#uploader ul li:last-child::before {
+    z-index: 10;
+    left: 9px;
+    width: 2px;
+    height: 8px;
+    margin-top: -4px;
+    background: white;
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+            transform: rotate(45deg);
+}
+
+#uploader ul li:last-child a {
+    text-decoration: none;
+    color: #b3b3b3;
+    font-weight: bold;
+}
+
+#uploader ul li:last-child a::before {
+    width: 14px;
+    height: 14px;
+    border-radius: 14px;
+}
+
+#uploader ul li:last-child a::before,
+#uploader ul li:last-child a::after {
+    margin: -7px 0 0 3px;
+    background: #C53333;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, .6),
+                0 -1px 3px rgba(0, 0, 0, .2);
+}
+
+#uploader ul li:last-child a::after {
+    left: 3px;
+    width: 8px;
+    height: 2px;
+    margin-top: -1px;
+    background: white;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+    -webkit-transform: rotate(45deg);
+       -moz-transform: rotate(45deg);
+            transform: rotate(45deg);
+}
+
+@-webkit-keyframes fadeout {
+    0% { opacity: 1; }
+    25% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@-moz-keyframes fadeout {
+    0% { opacity: 1; }
+    25% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes fadeout {
+    0% { opacity: 1; }
+    25% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@-webkit-keyframes fadein {
+    0% { opacity: 0; }
+    50% { opacity: 0; }
+    75% { opacity: 1; }
+}
+
+@-moz-keyframes fadein {
+    0% { opacity: 0; }
+    50% { opacity: 0; }
+    75% { opacity: 1; }
+}
+
+@keyframes fadein {
+    0% { opacity: 0; }
+    50% { opacity: 0; }
+    75% { opacity: 1; }
+}
