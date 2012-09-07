@@ -35,9 +35,9 @@ function cssProp(s){return eval(0+"O-Moz-Webkit-Ms-".replace(/.*?-|$/g,"||(s='$&
         if (isImage) {
             var reader = new FileReader()
 
-        // http://code.google.com/p/chromium/issues/detail?id=48367
-        //reader.addEventListener('onload', function(e) {
-        reader.onload = function(e) {
+            // http://code.google.com/p/chromium/issues/detail?id=48367
+            //reader.addEventListener('onload', function(e) {
+            reader.onload = function(e) {
                 dataURI = this.result
                 var img = document.createElement('img')
                 img.src = this.result
